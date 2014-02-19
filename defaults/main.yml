@@ -1,5 +1,6 @@
 ---
 
+redis_pidfile: /var/run/redis.pid
 redis_bind_address: "0.0.0.0"
 redis_port: 6379
 redis_syslog_enabled: "yes"
@@ -13,13 +14,24 @@ redis_db_dir: /var/lib/redis
 redis_role: master
 redis_requirepass: false
 redis_pass: None
-redis_max_clients: 128
-redis_max_memory: 512mb
+redis_max_clients: 10000
 redis_maxmemory_policy: volatile-lru
 redis_appendfsync: everysec
+redis_timeout: 0
+redis_loglevel: notice
+redis_logfile: /var/log/redis.log
+redis_hz: 10
+redis_tcp_keepalive: 0
+redis_syslog_ident: redis
 #If role is slave set these values too
 redis_master_ip: 1.1.1.1
 redis_master_port: 6379
 redis_master_auth: None
+redis_slave_serve_stale_data: yes
+redis_slave_read_only: yes
+redis_slave_priority: 100
 
+redis_disable_tcp_nodelay: no
 
+redis_appendonly: no
+redis_appendfilename: appendonly.aof

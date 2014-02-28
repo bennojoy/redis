@@ -3,28 +3,29 @@
 - name: Add the OS specific varibles
   include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Install the epel packages 
+- name: Install the epel packages
   yum: name=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm state=present
   when: ansible_os_family == "RedHat"
 
-- name: Install the Redis packages 
+- name: Install the Redis packages
   yum: name={{ item }} state=present
   with_items: redis_redhat_pkg
   when: ansible_os_family == "RedHat"
 
-- name: Install the Redis packages 
+- name: Install the Redis packages
   apt: name={{ item }} state=present update_cache=yes
   with_items: redis_ubuntu_pkg
   environment: env
   when: ansible_os_family == "Debian"
 
-- name: Copy the redis configuration file 
+- name: Copy the redis configuration file
   template: src=redis.conf.j2 dest={{ redis_conf_dest }}
-  notify: 
-   - restart redis 
+  notify:
+   - restart redis
 
-- name: Set the kernel paramter for vm overcommit 
+- name: Set the kernel paramter for vm overcommit
   sysctl: name=vm.overcommit_memory value=1 state=present
+  when: redis_vm_overcommit
 
 - name: start the redis service
   service: name={{ redis_service }} state=started enabled=yes

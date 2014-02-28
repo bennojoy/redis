@@ -21,5 +21,6 @@ redis_appendfsync: everysec
 redis_master_ip: 1.1.1.1
 redis_master_port: 6379
 redis_master_auth: None
+redis_vm_overcommit: true
 
 

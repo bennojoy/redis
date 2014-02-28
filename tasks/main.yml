@@ -25,6 +25,7 @@
 
 - name: Set the kernel paramter for vm overcommit 
   sysctl: name=vm.overcommit_memory value=1 state=present
+  when: redis_vm_overcommit
 
 - name: start the redis service
   service: name={{ redis_service }} state=started enabled=yes

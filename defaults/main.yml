@@ -22,4 +22,7 @@ redis_master_ip: 1.1.1.1
 redis_master_port: 6379
 redis_master_auth: None
 
-
+# Set this to true if you don't want to change the overcommit kernel setting.
+# (E.g. when you're using a container and you can't change kernel settings.)
+#
+redis_no_vm_overcommit: false

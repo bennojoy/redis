@@ -40,6 +40,10 @@ them are as follows. See the documentation for Redis for details:
 	redis_master_port: 6379           # master port
 	redis_master_auth: None           # master auth
 
+    # This isn't a redis setting, but if set to true, then the role won't try to
+    # change the kernel setting (useful for containers).
+    redis_no_vm_overcommit: false
+
 Examples
 --------
 

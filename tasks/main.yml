@@ -23,7 +23,7 @@
   notify: 
    - restart redis 
 
-- name: Set the kernel paramter for vm overcommit 
+- name: Set the kernel parameter for vm overcommit 
   sysctl: name=vm.overcommit_memory value=1 state=present
   when: redis_no_vm_overcommit == false
 

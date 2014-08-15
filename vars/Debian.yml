@@ -2,3 +2,4 @@
 
 redis_service: redis-server
 redis_conf_dest: /etc/redis/redis.conf
+redis_pidfile_dest: /var/run/redis/redis-server.pid

@@ -1,5 +1,14 @@
 ---
 
+######################
+# Playbook variables #
+######################
+# Whether to use Debian/Ubuntu backports repository when installing Redis
+redis_debian_backports: False
+
+###################
+# Redis variables #
+###################
 redis_bind_address: "0.0.0.0"
 redis_port: 6379
 redis_syslog_enabled: "yes"

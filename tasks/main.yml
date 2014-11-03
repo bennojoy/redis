@@ -24,8 +24,13 @@
   environment: env
   when: ansible_os_family == "Debian"
 
-- name: Copy the redis configuration file 
-  template: src=redis.conf.j2 dest={{ redis_conf_dest }}
+- name: Get version of Redis
+  command: redis-server --version
+  changed_when: False
+  register: redis_version
+
+- name: Copy the Redis configuration file 
+  template: src={{ "redis-2.8.conf.j2" if redis_version.stdout | search("v=2.8") else "redis.conf.j2" }} dest={{ redis_conf_dest }}
   notify: 
    - restart redis 
 

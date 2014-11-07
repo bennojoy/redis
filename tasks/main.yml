@@ -19,14 +19,20 @@
   when: ansible_os_family == "RedHat"
 
 - name: Install the Redis packages 
+  apt: name={{ item }} state=present update_cache=yes
+  with_items: redis_ubuntu_pkg
+  environment: env
+  when: ansible_os_family == "Debian" and not redis_debian_backports
+
+- name: Install the Redis packages
   apt:
     name: "{{ item }}"
     state: present
     update_cache: yes
-    default_release: "{{ ansible_distribution_release + '-backports' if redis_debian_backports else ansible_distribution_release }}"
+    default_release: "{{ ansible_distribution_release }}-backports"
   with_items: redis_ubuntu_pkg
   environment: env
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" and redis_debian_backports
 
 - name: Copy the redis configuration file 
   template: src=redis.conf.j2 dest={{ redis_conf_dest }}

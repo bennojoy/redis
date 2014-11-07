@@ -29,10 +29,17 @@
   changed_when: False
   register: redis_version
 
-- name: Copy the Redis configuration file 
-  template: src={{ "redis-2.8.conf.j2" if redis_version.stdout | search("v=2.8") else "redis.conf.j2" }} dest={{ redis_conf_dest }}
-  notify: 
-   - restart redis 
+- name: Copy the Redis configuration file
+  template: src=redis-2.8.conf.j2 dest={{ redis_conf_dest }}
+  when: redis_version.stdout | search("v=2.8")
+  notify:
+   - restart redis
+
+- name: Copy the Redis configuration file
+  template: src=redis.conf.j2 dest={{ redis_conf_dest }}
+  when: not redis_version.stdout | search("v=2.8")
+  notify:
+   - restart redis
 
 - name: Copy the rsyslogd configuration file for redis filter
   template: src=rsyslogd.conf.j2 dest=/etc/rsyslog.d/redis.conf

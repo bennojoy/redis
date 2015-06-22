@@ -178,7 +178,9 @@ requirepass {{ redis_pass }}
 # Once the limit is reached Redis will close all the new connections sending
 # an error 'max number of clients reached'.
 #
+{% if redis_max_clients is defined %}
 maxclients {{ redis_max_clients }}
+{% endif %}
 
 # Don't use more memory than the specified amount of bytes.
 # When the memory limit is reached Redis will try to remove keys

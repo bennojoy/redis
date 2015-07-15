@@ -13,14 +13,18 @@
   when: ansible_os_family == "RedHat" and ansible_distribution != "Fedora"
         and ansible_distribution_major_version == "7"
 
-- name: Install the Redis packages 
+- name: Install the Redis packages | Redhat
   yum: name={{ item }} state=present
-  with_items: redis_redhat_pkg
+  with_items:
+    - libselinux-python
+    - "{% if redis_server_version is defined %}redis={{ redis_server_version }}{% else %}redis{% endif %}"
   when: ansible_os_family == "RedHat"
 
-- name: Install the Redis packages 
+- name: Install the Redis packages | Debian
   apt: name={{ item }} state=present update_cache=yes
-  with_items: redis_ubuntu_pkg
+  with_items:
+    - python-selinux
+    - "{% if redis_server_version is defined %}redis-server={{ redis_server_version }}{% else %}redis-server{% endif %}"
   environment: env
   when: ansible_os_family == "Debian"
 
